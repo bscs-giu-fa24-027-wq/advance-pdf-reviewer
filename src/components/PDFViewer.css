@@ -1,0 +1,36 @@
+.pdf-viewer {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  background: var(--bg-canvas);
+}
+
+.pdf-viewer .react-pdf__Document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pdf-viewer .react-pdf__Page {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pdf-loading,
+.pdf-error,
+.pdf-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.pdf-error {
+  color: var(--error);
+}

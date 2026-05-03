@@ -1,0 +1,13 @@
+.review-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.review-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
