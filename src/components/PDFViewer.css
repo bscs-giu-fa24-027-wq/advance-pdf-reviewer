@@ -14,10 +14,17 @@
   align-items: center;
 }
 
-.pdf-viewer .react-pdf__Page {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+/* Wrap that holds Page + annotation canvas */
+.pdf-page-wrap {
+  position: relative;
+  display: inline-block;
+  box-shadow: var(--shadow-lg);
   border-radius: 4px;
   overflow: hidden;
+}
+
+.pdf-viewer .react-pdf__Page {
+  display: block;
 }
 
 .pdf-loading,

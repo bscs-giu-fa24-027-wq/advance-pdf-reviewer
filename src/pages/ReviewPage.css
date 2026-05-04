@@ -10,4 +10,11 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  min-height: 0;
+}
+
+@media (max-width: 768px) {
+  .review-body {
+    flex-direction: column;
+  }
 }

@@ -2,18 +2,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  padding: 10px 24px;
+  gap: 16px;
+  padding: 8px 20px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .controls-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+}
+
+.controls-group--right {
+  margin-left: auto;
 }
 
 .ctrl-btn {
@@ -22,12 +27,12 @@
   justify-content: center;
   width: 34px;
   height: 34px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text-primary);
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
 .ctrl-btn:hover:not(:disabled) {
@@ -46,6 +51,17 @@
   height: 16px;
 }
 
+.ctrl-btn--accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.ctrl-btn--accent:hover:not(:disabled) {
+  opacity: 0.85;
+  color: #fff;
+}
+
 .page-indicator {
   display: flex;
   align-items: center;
@@ -59,10 +75,11 @@
   padding: 4px 6px;
   text-align: center;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background: var(--bg);
   color: var(--text-primary);
   font-size: 14px;
+  font-family: inherit;
 }
 
 .page-input:focus {
@@ -77,6 +94,7 @@
 .scale-label {
   font-size: 13px;
   color: var(--text-secondary);
-  min-width: 40px;
+  min-width: 42px;
   text-align: center;
 }
+
