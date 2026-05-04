@@ -1,11 +1,12 @@
 import './PDFControls.css'
 
-function PDFControls({ currentPage, totalPages, scale, onPageChange, onScaleChange }) {
+function PDFControls({ currentPage, totalPages, scale, onPageChange, onScaleChange, onDownload, onPrint }) {
   const canPrev = currentPage > 1
   const canNext = currentPage < totalPages
 
   return (
     <div className="pdf-controls">
+      {/* Page navigation */}
       <div className="controls-group">
         <button
           className="ctrl-btn"
@@ -48,6 +49,7 @@ function PDFControls({ currentPage, totalPages, scale, onPageChange, onScaleChan
         </button>
       </div>
 
+      {/* Zoom */}
       <div className="controls-group">
         <button
           className="ctrl-btn"
@@ -89,6 +91,28 @@ function PDFControls({ currentPage, totalPages, scale, onPageChange, onScaleChan
             <path d="M3 3v5h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
+      </div>
+
+      {/* Download / Print */}
+      <div className="controls-group controls-group--right">
+        {onPrint && (
+          <button className="ctrl-btn" onClick={onPrint} aria-label="Print PDF" title="Print PDF">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <polyline points="6,9 6,2 18,2 18,9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <rect x="6" y="14" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        )}
+        {onDownload && (
+          <button className="ctrl-btn ctrl-btn--accent" onClick={onDownload} aria-label="Download PDF" title="Download PDF">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="7,10 12,15 17,10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   )

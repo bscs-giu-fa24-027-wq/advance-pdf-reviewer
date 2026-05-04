@@ -1,0 +1,147 @@
+.ocr-panel {
+  width: 320px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.ocr-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.ocr-panel-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ocr-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.ocr-panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ocr-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px;
+}
+
+/* Idle state */
+.ocr-idle {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.ocr-hint {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Running state */
+.ocr-running {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0;
+}
+
+.ocr-progress-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.ocr-progress-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-canvas);
+  overflow: hidden;
+}
+
+.ocr-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+/* Error state */
+.ocr-error {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--error);
+  font-size: 13px;
+}
+
+/* Done state */
+.ocr-result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ocr-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ocr-result-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.ocr-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13px;
+  font-family: 'Menlo', 'Consolas', monospace;
+  color: var(--text-primary);
+  line-height: 1.65;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin: 0;
+  max-height: 440px;
+  overflow-y: auto;
+}
+
+.ocr-rerun {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .ocr-panel {
+    width: 100%;
+    min-width: unset;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    max-height: 360px;
+  }
+}
