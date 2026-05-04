@@ -11,7 +11,7 @@ function Header({ onUploadNew, onDownload, onPrint, onToggleOCR, showOCRButton }
           <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           <polyline points="10,9 9,9 8,9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
-        <span className="header-title">Advance PDF Reviewer</span>
+        <span className="header-title">Advanced PDF Reviewer</span>
       </div>
 
       <div className="header-actions">

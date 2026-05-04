@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState } from 'react'
 import './AnnotationCanvas.css'
 
 function AnnotationCanvas({ width, height, page, annotations, activeTool, activeColor, activeWidth, onAdd }) {
@@ -6,6 +6,7 @@ function AnnotationCanvas({ width, height, page, annotations, activeTool, active
   const drawing = useRef(false)
   const startPos = useRef({ x: 0, y: 0 })
   const currentPath = useRef([])
+  const [textInput, setTextInput] = useState(null) // { x, y, canvasX, canvasY }
 
   const redraw = useCallback(() => {
     const canvas = canvasRef.current
@@ -75,10 +76,11 @@ function AnnotationCanvas({ width, height, page, annotations, activeTool, active
       drawing.current = true
       startPos.current = pos
     } else if (activeTool === 'text') {
-      const text = prompt('Enter text:')
-      if (text) {
-        onAdd({ tool: 'text', page, data: { x: pos.x, y: pos.y, text, color: activeColor, fontSize: 16 } })
-      }
+      const canvas = canvasRef.current
+      const rect = canvas.getBoundingClientRect()
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY
+      setTextInput({ x: clientX - rect.left, y: clientY - rect.top, canvasX: pos.x, canvasY: pos.y })
     }
   }
 
@@ -134,19 +136,45 @@ function AnnotationCanvas({ width, height, page, annotations, activeTool, active
     }
   }
 
+  const commitText = (text) => {
+    if (text.trim()) {
+      onAdd({ tool: 'text', page, data: { x: textInput.canvasX, y: textInput.canvasY, text: text.trim(), color: activeColor, fontSize: 16 } })
+    }
+    setTextInput(null)
+  }
+
   return (
-    <canvas
-      ref={canvasRef}
-      className={`annotation-canvas${activeTool ? ' active' : ''}`}
-      width={width}
-      height={height}
-      onMouseDown={handlePointerDown}
-      onMouseMove={handlePointerMove}
-      onMouseUp={handlePointerUp}
-      onTouchStart={handlePointerDown}
-      onTouchMove={handlePointerMove}
-      onTouchEnd={handlePointerUp}
-    />
+    <div className="annotation-canvas-wrap" style={{ width, height }}>
+      <canvas
+        ref={canvasRef}
+        className={`annotation-canvas${activeTool ? ' active' : ''}`}
+        width={width}
+        height={height}
+        onMouseDown={handlePointerDown}
+        onMouseMove={handlePointerMove}
+        onMouseUp={handlePointerUp}
+        onTouchStart={handlePointerDown}
+        onTouchMove={handlePointerMove}
+        onTouchEnd={handlePointerUp}
+      />
+      {textInput && (
+        <form
+          className="ann-text-input-form"
+          style={{ left: textInput.x, top: textInput.y }}
+          onSubmit={e => { e.preventDefault(); commitText(e.target.elements.anntext.value) }}
+        >
+          <input
+            name="anntext"
+            className="ann-text-input"
+            autoFocus
+            placeholder="Type text…"
+            aria-label="Annotation text"
+            onKeyDown={e => { if (e.key === 'Escape') setTextInput(null) }}
+            onBlur={e => commitText(e.target.value)}
+          />
+        </form>
+      )}
+    </div>
   )
 }
 

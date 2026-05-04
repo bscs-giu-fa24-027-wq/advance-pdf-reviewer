@@ -8,7 +8,7 @@ function HomePage({ onFileSelect, onScan }) {
       <Header />
       <main className="home-main">
         <div className="home-intro">
-          <h1 className="home-heading">Advance PDF Reviewer</h1>
+          <h1 className="home-heading">Advanced PDF Reviewer</h1>
           <p className="home-sub">
             Upload a PDF to review and annotate, or scan a physical document with your camera.
           </p>
