@@ -96,6 +96,7 @@ function AnnotationCanvas({ width, height, page, annotations, activeTool, active
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
       const pts = currentPath.current
+      if (pts.length < 2) return
       ctx.beginPath()
       ctx.moveTo(pts[pts.length - 2].x, pts[pts.length - 2].y)
       ctx.lineTo(pos.x, pos.y)

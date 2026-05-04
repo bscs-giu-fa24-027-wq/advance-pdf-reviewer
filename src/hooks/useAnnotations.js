@@ -5,7 +5,10 @@ import { useState, useCallback } from 'react'
 // tool 'highlight': data = { x, y, w, h, color }
 // tool 'text': data = { x, y, text, color, fontSize }
 
-let nextId = 1
+const generateId = () =>
+  typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `ann-${Date.now()}-${Math.random().toString(36).slice(2)}`
 
 export default function useAnnotations() {
   const [annotations, setAnnotations] = useState([])
@@ -14,7 +17,7 @@ export default function useAnnotations() {
   const [activeWidth, setActiveWidth] = useState(3)
 
   const addAnnotation = useCallback((annotation) => {
-    setAnnotations(prev => [...prev, { ...annotation, id: nextId++ }])
+    setAnnotations(prev => [...prev, { ...annotation, id: generateId() }])
   }, [])
 
   const removeAnnotation = useCallback((id) => {
