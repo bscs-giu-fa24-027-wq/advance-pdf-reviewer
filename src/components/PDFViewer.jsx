@@ -9,7 +9,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString()
 
-function PDFViewer({ file, currentPage, onDocumentLoad, scale }) {
+function PDFViewer({ file, currentPage, onDocumentLoad, onPageRender, scale }) {
   const [pageWidth, setPageWidth] = useState(null)
 
   const containerRef = useCallback((node) => {
@@ -31,6 +31,7 @@ function PDFViewer({ file, currentPage, onDocumentLoad, scale }) {
             pageNumber={currentPage}
             width={pageWidth ? pageWidth * scale : undefined}
             loading={<div className="pdf-loading">Rendering page…</div>}
+            onRenderSuccess={onPageRender}
           />
         </Document>
       ) : (

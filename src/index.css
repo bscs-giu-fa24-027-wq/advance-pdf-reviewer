@@ -1,6 +1,7 @@
 /* Design tokens */
 :root {
   --accent: #4f46e5;
+  --accent-hover: #4338ca;
   --accent-bg: rgba(79, 70, 229, 0.08);
   --accent-border: rgba(79, 70, 229, 0.4);
 
@@ -13,6 +14,15 @@
   --surface: #ffffff;
   --border: #e5e7eb;
   --error: #ef4444;
+  --success: #22c55e;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
 
@@ -29,6 +39,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --accent: #818cf8;
+    --accent-hover: #6366f1;
     --accent-bg: rgba(129, 140, 248, 0.12);
     --accent-border: rgba(129, 140, 248, 0.4);
 
@@ -41,6 +52,7 @@
     --surface: #1f2937;
     --border: #374151;
     --error: #f87171;
+    --success: #4ade80;
   }
 }
 

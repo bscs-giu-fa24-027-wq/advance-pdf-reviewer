@@ -1,0 +1,37 @@
+.annotation-canvas-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.annotation-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.annotation-canvas.active {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+.ann-text-input-form {
+  position: absolute;
+  z-index: 11;
+  pointer-events: auto;
+}
+
+.ann-text-input {
+  padding: 4px 8px;
+  font-size: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text-primary);
+  outline: none;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
