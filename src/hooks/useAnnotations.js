@@ -1,6 +1,17 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 
 let nextId = 1
+
+function loadAnnotationsFromStorage(storageKey) {
+  if (!storageKey) return []
+  try {
+    const raw = localStorage.getItem(`annotations:${storageKey}`)
+    if (raw) return JSON.parse(raw)
+  } catch {
+    // ignore
+  }
+  return []
+}
 
 export const TOOLS = [
   { id: 'draw',      label: 'Draw',      icon: 'pencil' },
@@ -23,9 +34,16 @@ export const COLORS = [
 /**
  * Manages annotations per PDF page.
  * Each annotation: { id, type, page, color, strokeWidth, points | rect | label }
+ * Optionally persists to localStorage when storageKey is provided.
  */
-function useAnnotations() {
-  const [annotations, setAnnotations]   = useState([])   // all saved annotations
+function useAnnotations(storageKey) {
+  const [annotations, setAnnotations]   = useState(() => {
+    const saved = loadAnnotationsFromStorage(storageKey)
+    if (saved.length > 0) {
+      nextId = Math.max(...saved.map((a) => a.id)) + 1
+    }
+    return saved
+  })
   const [activeTool, setActiveTool]     = useState('draw')
   const [activeColor, setActiveColor]   = useState('#3b82f6')
   const [strokeWidth, setStrokeWidth]   = useState(3)
@@ -33,6 +51,17 @@ function useAnnotations() {
   const currentPoints                   = useRef([])      // live points for 'draw'
   const currentRect                     = useRef(null)    // live rect for 'highlight'
   const dragStart                       = useRef(null)
+
+  /* ─── Persist annotations to localStorage ────────── */
+
+  useEffect(() => {
+    if (!storageKey) return
+    try {
+      localStorage.setItem(`annotations:${storageKey}`, JSON.stringify(annotations))
+    } catch {
+      // ignore quota errors
+    }
+  }, [annotations, storageKey])
 
   /* ─── Save a completed annotation ───────────────── */
 
@@ -77,7 +106,12 @@ function useAnnotations() {
 
   /* ─── Clear all annotations ──────────────────────── */
 
-  const clearAll = useCallback(() => setAnnotations([]), [])
+  const clearAll = useCallback(() => {
+    if (storageKey) {
+      try { localStorage.removeItem(`annotations:${storageKey}`) } catch { /* ignore */ }
+    }
+    setAnnotations([])
+  }, [storageKey])
 
   /* ─── Pointer event helpers ──────────────────────── */
 

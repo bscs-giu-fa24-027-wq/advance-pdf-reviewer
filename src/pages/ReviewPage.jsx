@@ -12,8 +12,8 @@ import './ReviewPage.css'
 
 function ReviewPage({ initialFile, onClose }) {
   const { totalPages, currentPage, scale, handleDocumentLoad, goToPage, changeScale } = usePDF()
-  const { reviews, addReview, deleteReview }                                          = useReviews()
-  const ann = useAnnotations()
+  const { reviews, addReview, deleteReview }                                          = useReviews(fileName)
+  const ann = useAnnotations(fileName)
 
   const [pdfFile]        = useState(initialFile)
   const [fileName]       = useState(initialFile?.name ?? 'document.pdf')

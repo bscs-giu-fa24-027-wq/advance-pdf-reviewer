@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 let nextId = 1
 
@@ -11,8 +11,35 @@ function formatDate(date) {
   })
 }
 
-function useReviews() {
-  const [reviews, setReviews] = useState([])
+function loadFromStorage(storageKey) {
+  if (!storageKey) return []
+  try {
+    const raw = localStorage.getItem(`reviews:${storageKey}`)
+    if (raw) return JSON.parse(raw)
+  } catch {
+    // ignore parse / quota errors
+  }
+  return []
+}
+
+function useReviews(storageKey) {
+  const [reviews, setReviews] = useState(() => {
+    const saved = loadFromStorage(storageKey)
+    if (saved.length > 0) {
+      nextId = Math.max(...saved.map((r) => r.id)) + 1
+    }
+    return saved
+  })
+
+  // Persist to localStorage whenever reviews change
+  useEffect(() => {
+    if (!storageKey) return
+    try {
+      localStorage.setItem(`reviews:${storageKey}`, JSON.stringify(reviews))
+    } catch {
+      // ignore quota errors
+    }
+  }, [reviews, storageKey])
 
   const addReview = useCallback(({ text, page }) => {
     const review = {
@@ -29,8 +56,11 @@ function useReviews() {
   }, [])
 
   const clearReviews = useCallback(() => {
+    if (storageKey) {
+      try { localStorage.removeItem(`reviews:${storageKey}`) } catch { /* ignore */ }
+    }
     setReviews([])
-  }, [])
+  }, [storageKey])
 
   return { reviews, addReview, deleteReview, clearReviews }
 }
